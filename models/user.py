@@ -15,16 +15,22 @@ class UserModel(db.Model):
     instagram_link = db.Column(db.String(40))
 
 
-    def __init__(self, username, password):
+    def __init__(self, username, email, password):
         self.username = username
+        self.email = email
         self.password = password
         
-        
-
-
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def find_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
 
     @classmethod
     def find_by_username(cls, username):
@@ -33,3 +39,11 @@ class UserModel(db.Model):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
+
+    
+    def jsonify(self):
+        return {
+            "username" : self.username,
+            "email" : self.email,
+            "admin" : self.admin
+        }
