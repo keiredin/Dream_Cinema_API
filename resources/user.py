@@ -75,14 +75,14 @@ class UserRegister(Resource):
         user = UserModel.find_by_id(id)
         data = request.get_json()
         
-        if user:
-        #     if UserModel.find_by_email(data['email']):
-        #         return {"message":"This email already taken"}
-        #     else:
-            # for key in data.keys():
-            #     user.key = data[key]
-            #     user.save_to_db()
-            return data.keys()., 200
+        # if user:
+        # #     if UserModel.find_by_email(data['email']):
+        # #         return {"message":"This email already taken"}
+        # #     else:
+        #     # for key in data.keys():
+        #     #     user.key = data[key]
+        #     #     user.save_to_db()
+        #     return data.keys(), 200
         return {"message": "User is not found!"}, 404
 
         # users = UserModel.query.all()
