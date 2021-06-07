@@ -4,7 +4,7 @@ from enum import unique
 from db import db
 
 
-class Movie(db.Model):
+class MovieModel(db.Model):
     __tablename__ = "movies"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -22,3 +22,5 @@ class Movie(db.Model):
 
     def __repr__(self):
         return f"Movie('{self.title}')"
+
+    

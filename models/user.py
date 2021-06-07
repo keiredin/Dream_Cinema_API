@@ -9,16 +9,17 @@ class UserModel(db.Model):
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(30), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
-    admin = db.Column(db.Boolean, default=True)
+    admin = db.Column(db.Boolean, default=False)
     image = db.Column(db.String(100), default='user.png')
     twitter_link = db.Column(db.String(40))
     instagram_link = db.Column(db.String(40))
 
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, password, email):
         self.username = username
         self.email = email
         self.password = password
+        
         
     def save_to_db(self):
         db.session.add(self)
@@ -33,8 +34,8 @@ class UserModel(db.Model):
         return cls.query.filter_by(email=email).first()
 
     @classmethod
-    def find_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+    def find_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
 
     @classmethod
     def find_by_id(cls, _id):

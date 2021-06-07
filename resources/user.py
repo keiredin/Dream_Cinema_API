@@ -29,14 +29,17 @@ class UsersRegister(Resource):
                         help="This field cannot be blank."
                         )
 
+    
+
     def post(self):
         data = UsersRegister.parser.parse_args()
 
         if UserModel.find_by_email(data['email']):
-            return {"message": "A user with that email already exists"}, 400
+            return {"message": "A user with that email  already exists"}, 400
 
-        user = UserModel(username=data['username'], password=data['password'], email=data['email'])
+        user = UserModel(data['username'], data['password'], data['email'])
         user.save_to_db()
+        
 
         return {"message": "User created successfully."}, 201
 
@@ -68,16 +71,33 @@ class UserRegister(Resource):
 
     
     def put(self, id):
+        # users = UserModel.query.all()
         user = UserModel.find_by_id(id)
-        data = UserRegister.parser.parse_args()
+        data = request.get_json()
+        
         if user:
-            user.username = data['username']
-            user.email = data['email']
-            user.password = data['password']
-            user.save_to_db()
-
-            return {"message": "User updated!"}, 200
+        #     if UserModel.find_by_email(data['email']):
+        #         return {"message":"This email already taken"}
+        #     else:
+            # for key in data.keys():
+            #     user.key = data[key]
+            #     user.save_to_db()
+            return data.keys()., 200
         return {"message": "User is not found!"}, 404
+
+        # users = UserModel.query.all()
+        # user = UserModel.find_by_id(id)
+        # data = UserRegister.parser.parse_args()
+        # if user:
+        #     if UserModel.find_by_email(data['email']):
+        #         return {"message":"This email already taken"}
+        #     else:
+        #         user.username = data['username']
+        #         user.email = data['email']
+        #         user.password = data['password']
+        #         user.save_to_db()
+        #         return {"message": "User updated!"}, 200
+        # return {"message": "User is not found!"}, 404
 
     def delete(self, id):
         user = UserModel.find_by_id(id)
