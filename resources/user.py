@@ -1,5 +1,5 @@
 from flask_restplus import Resource, reqparse
-from models.user import UserModel
+from ..models.user import UserModel
 from flask_jwt import *
 
 

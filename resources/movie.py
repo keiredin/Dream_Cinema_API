@@ -1,10 +1,10 @@
-from models.movie import MovieModel
+from ..models.movie import MovieModel
 from datetime import datetime
 from flask_restplus import Resource, reqparse
 from flask import jsonify, request
-from models.movie import MovieModel
+from ..models.movie import MovieModel
 from flask_jwt import *
-from . import ma
+from .. import ma
 
 
 
@@ -95,7 +95,7 @@ class MovieList(Resource):
         user.save_to_db()
         
 
-#         return {"message": "User created successfully."}, 201
+        return {"message": "User created successfully."}, 201
 
 # class Movie(Resource):
 #     def get(self, id):

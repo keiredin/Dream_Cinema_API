@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import unique
 
-from db import db
+from .. import db
 
 
 class MovieModel(db.Model):
