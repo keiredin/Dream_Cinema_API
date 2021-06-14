@@ -1,4 +1,4 @@
-from .. import db
+from Dream_Cinema_API import db
 from datetime import datetime
 from enum import unique
 
@@ -6,19 +6,19 @@ class UserModel(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(30), nullable=False, unique=True)
-    password = db.Column(db.String(100), nullable=False)
-    admin = db.Column(db.Boolean, default=False)
-    image = db.Column(db.String(100), default='user.png')
-    twitter_link = db.Column(db.String(40))
-    instagram_link = db.Column(db.String(40))
+    Username = db.Column(db.String(20), nullable=False)
+    Email = db.Column(db.String(30), nullable=False, unique=True)
+    Password = db.Column(db.String(100), nullable=False)
+    Admin = db.Column(db.Boolean, default=False)
+    Image = db.Column(db.String(100), default='user.png')
+    Twitter_link = db.Column(db.String(40))
+    Instagram_link = db.Column(db.String(40))
 
 
-    def __init__(self, username, password, email):
-        self.username = username
-        self.email = email
-        self.password = password
+    # def __init__(self, username, password, email):
+    #     self.username = username
+    #     self.email = email
+    #     self.password = password
         
         
     def save_to_db(self):

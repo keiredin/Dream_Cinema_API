@@ -1,22 +1,40 @@
-from ..models.movie import MovieModel
+from Dream_Cinema_API.models.movie import MovieModel
 from datetime import datetime
-from flask_restplus import Resource, reqparse
+from flask_restplus import Resource, reqparse, fields
 from flask import jsonify, request
-from ..models.movie import MovieModel
+
 from flask_jwt import *
-from .. import ma
+from Dream_Cinema_API.ma import *
+from Dream_Cinema_API import api
 
 
 
-class MovieSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'title', 'description', 'postor', 'background', 'trailer', 'screening', 'genre', 'idmbRating', 'airedBy', 'release', 'ticket')
+# class MovieSchema(ma.Schema):
+#     class Meta:
+#         fields = ('id', 'title', 'description', 'postor', 'background', 'trailer', 'screening', 'genre', 'idmbRating', 'airedBy', 'release', 'ticket')
 
 movie_schema = MovieSchema()
 movies_schema = MovieSchema(many=True)
 
 class MovieList(Resource):
     # # @jwt_required
+
+
+    # Model required by flask_restplus for expect
+    movieModel = api.model("MovieModel", {
+        'Title': fields.String('Name of the Movie'),
+        'Description': fields.String,
+        'Postor' : fields.String('Poster url'),
+        'Background': fields.String('Background url'),
+        'Trailer': fields.String('trailer url'),
+        'Screening': fields.DateTime,
+        'Genre': fields.String,
+        'IDMBRating': fields.Float,
+        'AiredBy': fields.String,
+        'Release Date': fields.DateTime,
+        'Ticket' : fields.String
+
+    })
     # def get(self):
     #     movies = MovieModel.query.all()
     #     result = movies_schema.dump(movies)
