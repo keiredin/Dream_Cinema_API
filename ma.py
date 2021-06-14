@@ -9,7 +9,7 @@ ma = Marshmallow()
 class MovieSchema(ma.Schema):
     class Meta:
         fields = ("Title", "Description","Postor", "Background","Trailer","Screening","Genre","IDMBRating", "AiredBy",
-                  "Release Date","Ticket")
+                  "ReleaseDate","Ticket")
 
         model = MovieModel
 
@@ -19,3 +19,9 @@ class UserSchema(ma.Schema):
         fields = ("Username", "Email", "Password","Admin","Image","Twitter_link","Instagram_link")
 
         model = UserModel
+
+class CommentSchema(ma.Schema):
+    class Meta:
+        fields = ("user_id", "movie_id", "comment","rating","date")
+
+        model = CommentModel

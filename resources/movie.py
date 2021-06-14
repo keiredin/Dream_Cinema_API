@@ -21,7 +21,7 @@ class MovieList(Resource):
 
 
     # Model required by flask_restplus for expect
-    movieModel = api.model("MovieModel", {
+    movie = api.model("Movie", {
         'Title': fields.String('Name of the Movie'),
         'Description': fields.String,
         'Postor' : fields.String('Poster url'),
@@ -31,96 +31,168 @@ class MovieList(Resource):
         'Genre': fields.String,
         'IDMBRating': fields.Float,
         'AiredBy': fields.String,
-        'Release Date': fields.DateTime,
+        'ReleaseDate': fields.DateTime,
         'Ticket' : fields.String
-
     })
-    # def get(self):
-    #     movies = MovieModel.query.all()
-    #     result = movies_schema.dump(movies)
-    #     return jsonify(result.data)
+
+    def get(self):
+        ''' 
+            Get All Movies from the Database
+        '''
+        movies = MovieModel.query.all()
+        return movies_schema.dump(movies)
 
     
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('title',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
-    parser.add_argument('description',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
-    parser.add_argument('postor',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
-    parser.add_argument('background',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
+    # parser = reqparse.RequestParser()
+    # parser.add_argument('title',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('description',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('postor',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('background',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
 
-    parser.add_argument('trailer',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
+    # parser.add_argument('trailer',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
 
-    parser.add_argument('screening',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )  
-    parser.add_argument('genre',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
+    # parser.add_argument('screening',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )  
+    # parser.add_argument('genre',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
 
-    parser.add_argument('idmbRating',
-                        type=float,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
-    parser.add_argument('airedBy',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        ) 
-    parser.add_argument('release',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        ) 
-    parser.add_argument('ticket',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )   
+    # parser.add_argument('idmbRating',
+    #                     type=float,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('airedBy',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     ) 
+    # parser.add_argument('release',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     ) 
+    # parser.add_argument('ticket',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )   
 
-
+    @api.expect(movie)
     def post(self):
-        data = MovieList.parser.parse_args()
+        '''
+            Create a new movie
+        '''
 
-        if MovieModel.find_by_title(data['title']):
-            return {"message": "A user with that title already exists"}, 400
+        new_movie = MovieModel()
+        scdate = request.json['Screening']
+        reldate = request.json['ReleaseDate']
+        new_movie.Title = request.json['Title']
+        new_movie.Description = request.json['Description']
+        new_movie.Postor = request.json['Postor']
+        new_movie.Background = request.json['Background']
+        new_movie.Trailer = request.json['Trailer']
+        new_movie.Screening = datetime(int(scdate[:4]), int(scdate[5:7]), int(scdate[8:10]),int(scdate[11:13]), int(scdate[14:16]), int(scdate[17:19]))
+        new_movie.Genre = request.json['Genre']
+        new_movie.IDMBRating = request.json['IDMBRating']
+        new_movie.AiredBy = request.json['AiredBy']
+        new_movie.ReleaseDate = datetime(int(reldate[:4]), int(reldate[5:7]), int(reldate[8:10]),int(reldate[11:13]), int(reldate[14:16]), int(reldate[17:19]))
+        new_movie.Ticket = request.json['Ticket']
 
-        user = MovieModel(title=data['title'], description=data['description'], postor=data['postor'], background=data['background'], trailer=data['trailer'], screening=data['screening'], genre=data['genre'], idmbRating=data['idmbRating'], airedBy=data['airedBy'], release=data['release'], ticket=data['ticket'])
-        user.save_to_db()
-        
+        new_movie.save_to_db()
+        return movie_schema.dump(new_movie), 201
 
-        return {"message": "User created successfully."}, 201
+class Movie(Resource):
 
-# class Movie(Resource):
-#     def get(self, id):
-#         movie = MovieModel.find_by_id(id)
-#         if movie:
-#             return {f"movie {movie.id}" : movie.json()}, 200
-#         return {"message": "User is not found!"}, 404
+    movie = api.model("Movie", {
+        'Title': fields.String('Name of the Movie'),
+        'Description': fields.String,
+        'Postor' : fields.String('Poster url'),
+        'Background': fields.String('Background url'),
+        'Trailer': fields.String('trailer url'),
+        'Screening': fields.DateTime,
+        'Genre': fields.String,
+        'IDMBRating': fields.Float,
+        'AiredBy': fields.String,
+        'ReleaseDate': fields.DateTime,
+        'Ticket' : fields.String
+    })
+
+    def get(self, id):
+        '''
+            Get a movie by id
+        '''
+        movie = MovieModel.find_by_id(id)
+        if movie:
+            return movie_schema.dump(movie),200
+        return {"message": "Movie is not found!"}, 404
+
+    @api.expect(movie)
+    def put(self, id):
+        '''
+            Update an existing movie
+        '''
+
+        movieToEdit = MovieModel().query.filter_by(id=id).first()
+        try :
+            if movieToEdit:
+                scdate = request.json['Screening']
+                reldate = request.json['ReleaseDate']
+
+                movieToEdit.Title = request.json['Title']
+                movieToEdit.Description = request.json['Description']
+                movieToEdit.Postor = request.json['Postor']
+                movieToEdit.Background = request.json['Background']
+                movieToEdit.Trailer = request.json['Trailer']
+                movieToEdit.Screening = datetime(int(scdate[:4]), int(scdate[5:7]), int(scdate[8:10]),int(scdate[11:13]), int(scdate[14:16]), int(scdate[17:19]))
+                movieToEdit.Genre = request.json['Genre']
+                movieToEdit.IDMBRating = request.json['IDMBRating']
+                movieToEdit.AiredBy = request.json['AiredBy']
+                movieToEdit.ReleaseDate = datetime(int(reldate[:4]), int(reldate[5:7]), int(reldate[8:10]),int(reldate[11:13]), int(reldate[14:16]), int(reldate[17:19]))
+                movieToEdit.Ticket = request.json['Ticket']
+
+                movieToEdit.save_to_db()
+                return movie_schema.dump(movieToEdit), 200
+            
+            return {"message" : "Movie not found"}, 404
+        except:
+            return {"message" : "Please Try Again"}
+
+    def delete(self, id):
+        '''
+            Delete a movie from Database
+        '''
+        movie = MovieModel.find_by_id(id)
+        if movie:
+            movie.delete_from_db()
+            return {"message": "Movie is successfully deleted!"}, 200
+        return {"message": "Movie is not found!"}, 404
 
     
 
