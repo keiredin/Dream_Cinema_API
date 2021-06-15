@@ -9,7 +9,7 @@ ma = Marshmallow()
 class MovieSchema(ma.Schema):
     class Meta:
         fields = ("Title", "Description","Postor", "Background","Trailer","Screening","Genre","IDMBRating", "AiredBy",
-                  "Release Date","Ticket")
+                  "ReleaseDate","Ticket")
 
         model = MovieModel
 

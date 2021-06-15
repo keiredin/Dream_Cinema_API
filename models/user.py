@@ -31,20 +31,18 @@ class UserModel(db.Model):
 
     @classmethod
     def find_by_email(cls, email):
-        return cls.query.filter_by(email=email).first()
+        return cls.query.filter_by(Email=email).first()
 
-    @classmethod
-    def find_by_email(cls, email):
-        return cls.query.filter_by(email=email).first()
+    
 
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
 
     
-    def jsonify(self):
-        return {
-            "username" : self.username,
-            "email" : self.email,
-            "admin" : self.admin
-        }
+    # def jsonify(self):
+    #     return {
+    #         "username" : self.username,
+    #         "email" : self.email,
+    #         "admin" : self.admin
+    #     }

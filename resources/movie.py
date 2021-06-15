@@ -31,7 +31,7 @@ class MovieList(Resource):
         'Genre': fields.String,
         'IDMBRating': fields.Float,
         'AiredBy': fields.String,
-        'Release Date': fields.DateTime,
+        'ReleaseDate': fields.DateTime,
         'Ticket' : fields.String
 
     })

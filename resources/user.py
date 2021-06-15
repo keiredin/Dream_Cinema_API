@@ -1,4 +1,4 @@
-from flask import request
+from flask import request,jsonify
 from flask_restplus import Resource, reqparse, Api, fields
 from flask_jwt import *
 from Dream_Cinema_API.models.user import *
@@ -11,17 +11,15 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 
-
+# Model required by flask_restplus for expect
+user = api.model("User", {
+    'Username': fields.String('Name of the user'),
+    'Email': fields.String,
+    'Password': fields.String
+    
+})
 class UsersRegister(Resource):
     # @jwt_required
-
-    # Model required by flask_restplus for expect
-    user = api.model("User", {
-        'Username': fields.String('Name of the user'),
-        'Email': fields.String,
-        'Password': fields.String
-        
-    })
 
     
     def get(self):
@@ -89,35 +87,43 @@ class UserRegister(Resource):
             return user_schema.dump(user),200
         return {"message": "User is not found!"}, 404
 
-
+    @api.expect(user)
     def put(self, id):
         # users = UserModel.query.all()
         user = UserModel.find_by_id(id)
-        data = request.json()
+        
+        new_username = request.json['Username']
+        new_email = request.json['Email']
+        new_password = request.json['Password']
+
+        
         
         if user:
-            if UserModel.find_by_email(data['email']):
-                return {"message":"This email already taken"}
+            if UserModel.find_by_email(new_email):
+                return {"message":"This email already taken"},100
             else:
-                for key in data.keys():
-                    user.key = data[key]
-                    user.save_to_db()
-                return data.keys(), 200
+                user.Username = new_username
+                user.Email = new_email
+                user.Password = new_password
+                user.save_to_db()
+                
+                return user_schema.dump(user), 200
+
         return {"message": "User is not found!"}, 404
 
-        users = UserModel.query.all()
-        user = UserModel.find_by_id(id)
-        data = UserRegister.parser.parse_args()
-        if user:
-            if UserModel.find_by_email(data['email']):
-                return {"message":"This email already taken"}
-            else:
-                user.username = data['username']
-                user.email = data['email']
-                user.password = data['password']
-                user.save_to_db()
-                return {"message": "User updated!"}, 200
-        return {"message": "User is not found!"}, 404
+        # users = UserModel.query.all()
+        # user = UserModel.find_by_id(id)
+        # data = UserRegister.parser.parse_args()
+        # if user:
+        #     if UserModel.find_by_email(data['email']):
+        #         return {"message":"This email already taken"}
+        #     else:
+        #         user.username = data['username']
+        #         user.email = data['email']
+        #         user.password = data['password']
+        #         user.save_to_db()
+        #         return {"message": "User updated!"}, 200
+        # return {"message": "User is not found!"}, 404
     
 
     def delete(self, id):
@@ -126,6 +132,15 @@ class UserRegister(Resource):
             user.delete_from_db()
             return {"message": "User is successfully deleted!"}, 200
         return {"message": "User is not found!"}, 404
+
+
+
+
+
+
+
+
+        
 #     parser = reqparse.RequestParser()
 #     parser.add_argument('username',
 #                         type=str,

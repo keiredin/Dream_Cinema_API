@@ -2,11 +2,18 @@ from flask_restplus import Resource, reqparse
 from models.comment import CommentModel
 from datetime import datetime
 from flask_jwt import *
+from Dream_Cinema_API.ma import *
+
+
+comment_schema = UserSchema()
+comments_schema = UserSchema(many=True)
 
 class UsersComment(Resource):
     def get(self):
         comments = CommentModel.query.all()
-        return {"comments" : list(map(lambda u:u.jsonify(), comments))}
+        return comments_schema.dump(comments)
+        # return {"comments" : list(map(lambda u:u.jsonify(), comments))}
+        
 
 
     parser = reqparse.RequestParser()
