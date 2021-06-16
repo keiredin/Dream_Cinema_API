@@ -107,35 +107,3 @@ class UserComment(Resource):
 
 
 
-
-
-
-
-
-# parser = reqparse.RequestParser()
-    # parser.add_argument('comment',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('rating',
-    #                     type=float,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('user_id',
-    #                     type=int,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('movie_id',
-    #                     type=int,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('date',
-    #                     type=datetime,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    

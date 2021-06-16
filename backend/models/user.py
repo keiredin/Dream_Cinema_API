@@ -1,7 +1,9 @@
 from datetime import datetime
 from enum import unique
-from backend.db import db
+from backend import db
+from backend import app
 
+app.app_context().push()
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -17,10 +19,7 @@ class UserModel(db.Model):
 
 
     # def __init__(self, username, password, email):
-    #     self.username = username
-    #     self.email = email
-    #     self.password = password
-        
+    #     print(UserModel.query.all())
         
     def save_to_db(self):
         db.session.add(self)

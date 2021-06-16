@@ -1,7 +1,7 @@
 
 from flask import Flask
 from flask_restplus import Api, Resource, fields
-from flask_jwt import JWT
+from flask_jwt import JWT, jwt_required, current_identity
 import uuid
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy

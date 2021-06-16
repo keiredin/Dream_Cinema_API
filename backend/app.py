@@ -1,20 +1,18 @@
 from backend import app
 from flask_restplus import Api, Resource, fields
 from backend import api
-from flask_jwt import JWT
+from flask_jwt import JWT, jwt_required, current_identity
 from backend.resources.user import *
 from backend.resources.movie import *
 from backend.resources.comment import *
 from backend.security import authenticate, identity
-
+from backend.models.user import *
 
 
 
 @app.before_first_request
 def create_tables():
     db.create_all()
-
-
 
 
 

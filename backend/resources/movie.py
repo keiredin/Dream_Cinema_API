@@ -9,18 +9,11 @@ from backend import api
 
 
 
-# class MovieSchema(ma.Schema):
-#     class Meta:
-#         fields = ('id', 'title', 'description', 'postor', 'background', 'trailer', 'screening', 'genre', 'idmbRating', 'airedBy', 'release', 'ticket')
-
 movie_schema = MovieSchema()
 movies_schema = MovieSchema(many=True)
 
 class MovieList(Resource):
-    # # @jwt_required
-
-
-    # Model required by flask_restplus for expect
+    
     movie = api.model("Movie", {
         'Title': fields.String('Name of the Movie'),
         'Description': fields.String,
@@ -152,62 +145,3 @@ class Movie(Resource):
 
 
 
-# parser = reqparse.RequestParser()
-    # parser.add_argument('title',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('description',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('postor',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('background',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-
-    # parser.add_argument('trailer',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-
-    # parser.add_argument('screening',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )  
-    # parser.add_argument('genre',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-
-    # parser.add_argument('idmbRating',
-    #                     type=float,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('airedBy',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     ) 
-    # parser.add_argument('release',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     ) 
-    # parser.add_argument('ticket',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )   
