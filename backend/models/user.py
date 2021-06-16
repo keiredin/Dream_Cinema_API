@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import unique
-from backend import db
+from backend.db import db
 
 
 class UserModel(db.Model):
@@ -33,6 +33,10 @@ class UserModel(db.Model):
     @classmethod
     def find_by_email(cls, email):
         return cls.query.filter_by(Email=email).first()
+
+    @classmethod
+    def find_by_username(cls, username):
+        return cls.query.filter_by(Username=username).first()
 
     
 

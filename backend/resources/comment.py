@@ -1,6 +1,7 @@
 from flask.globals import request
 from datetime import datetime
 from flask_restplus import Resource,fields
+from flask_jwt import jwt_required
 from backend.models.comment import CommentModel
 from backend.ma import *
 from backend import api
@@ -28,32 +29,6 @@ class UsersComment(Resource):
         return comments_schema.dump(comments)
 
 
-    # parser = reqparse.RequestParser()
-    # parser.add_argument('comment',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('rating',
-    #                     type=float,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('user_id',
-    #                     type=int,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('movie_id',
-    #                     type=int,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('date',
-    #                     type=datetime,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
     
     @api.expect(comment)
     def post(self):
@@ -124,3 +99,43 @@ class UserComment(Resource):
         return {"message" : "Comment not found"}, 404
         # except:
         #     return {"message" : "Please Try Again"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+# parser = reqparse.RequestParser()
+    # parser.add_argument('comment',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('rating',
+    #                     type=float,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('user_id',
+    #                     type=int,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('movie_id',
+    #                     type=int,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('date',
+    #                     type=datetime,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    

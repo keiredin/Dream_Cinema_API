@@ -44,65 +44,7 @@ class MovieList(Resource):
 
     
 
-    # parser = reqparse.RequestParser()
-    # parser.add_argument('title',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('description',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('postor',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('background',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-
-    # parser.add_argument('trailer',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-
-    # parser.add_argument('screening',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )  
-    # parser.add_argument('genre',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-
-    # parser.add_argument('idmbRating',
-    #                     type=float,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )
-    # parser.add_argument('airedBy',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     ) 
-    # parser.add_argument('release',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     ) 
-    # parser.add_argument('ticket',
-    #                     type=str,
-    #                     required=True,
-    #                     help="This field cannot be blank."
-    #                     )   
+    
 
     @api.expect(movie)
     def post(self):
@@ -196,3 +138,76 @@ class Movie(Resource):
 
     
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# parser = reqparse.RequestParser()
+    # parser.add_argument('title',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('description',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('postor',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('background',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+
+    # parser.add_argument('trailer',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+
+    # parser.add_argument('screening',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )  
+    # parser.add_argument('genre',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+
+    # parser.add_argument('idmbRating',
+    #                     type=float,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )
+    # parser.add_argument('airedBy',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     ) 
+    # parser.add_argument('release',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     ) 
+    # parser.add_argument('ticket',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be blank."
+    #                     )   

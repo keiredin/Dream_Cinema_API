@@ -1,10 +1,12 @@
 from backend import app
 from flask_restplus import Api, Resource, fields
 from backend import api
-  
+from flask_jwt import JWT
 from backend.resources.user import *
 from backend.resources.movie import *
 from backend.resources.comment import *
+from backend.security import authenticate, identity
+
 
 
 
@@ -16,9 +18,8 @@ def create_tables():
 
 
 
-# jwt = JWT(app, authenticate, identity)
-# api.add_resource(Store, '/api/v1/store/<string:name>')
-# api.add_resource(StoreList, '/api/v1/stores')
+jwt = JWT(app, authenticate, identity)
+
 api.add_resource(UserComment, '/api/v1/comment/<int:id>')
 api.add_resource(UsersComment, '/api/v1/comment/')
 api.add_resource(UsersRegister, '/api/v1/register')
