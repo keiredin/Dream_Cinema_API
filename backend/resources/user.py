@@ -1,6 +1,6 @@
 from flask import request,jsonify
 from flask_restplus import Resource, reqparse, Api, fields
-from flask_jwt import *
+from flask_jwt import current_identity
 from flask_jwt import jwt_required
 import json
 
@@ -15,8 +15,7 @@ users_schema = UserSchema(many=True)
 
 # Model required by flask_restplus for expect
 user = api.model("User", {
-    'Username': fields.String('Name of the user'),
-    'Email': fields.String,
+    'Email': fields.String('User Email'),
     'Password': fields.String
     
 })
@@ -35,7 +34,7 @@ class UsersRegister(Resource):
         '''
             Create a new User
         '''
-        Username = request.json['Username']
+        Username = request.json['Email']
         Email = request.json['Email']
         Password = request.json['Password']
 
@@ -81,7 +80,7 @@ class UserRegister(Resource):
         # users = UserModel.query.all()
         user = UserModel.find_by_id(id)
         
-        new_username = request.json['Username']
+        new_username = request.json['Email']
         new_email = request.json['Email']
         new_password = request.json['Password']
 
@@ -109,9 +108,14 @@ class UserRegister(Resource):
         '''
             delete a user from database
         '''
-        user = UserModel.find_by_id(id)
-        if user:
-            user.delete_from_db()
-            return {"message": "User is successfully deleted!"}, 200
-        return {"message": "User is not found!"}, 404
+        return user_schema.dump(current_identity)
+        # user = UserModel.find_by_id(id)
+        # if user:
+        #     user.delete_from_db()
+        #     return {"message": "User is successfully deleted!"}, 200
+        # return {"message": "User is not found!"}, 404
 
+class CurrentUser(Resource):
+    @jwt_required()
+    def get():
+        return user_schema.dump(current_identity)

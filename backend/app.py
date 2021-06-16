@@ -25,5 +25,7 @@ api.add_resource(UserRegister, '/api/v1/register/<int:id>')
 api.add_resource(MovieList, '/api/v1/movies')
 api.add_resource(Movie, '/api/v1/movie/<int:id>')
 
+api.add_resource(CurrentUser, '/api/v1/current_user')
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
